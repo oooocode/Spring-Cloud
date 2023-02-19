@@ -23,7 +23,7 @@ public class PaymentController {
     @PostMapping("/create")
     public CommonResult<Long> create(@RequestBody Payment payment){
         if (payment == null){
-            return new CommonResult<>(401, "请求参数为空哈哈");
+            return new CommonResult<>(401, "请求参数为空");
         }
         long paymentId = paymentService.create(payment);
         log.info("插入结果为:" + payment);
