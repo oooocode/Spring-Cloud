@@ -1,0 +1,34 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: cloud-payment-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包 com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db2019?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: wth
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  type-aliases-package: com.atguigu.springcloud.entities    # 所有Entity别名类所在包
+
+
+
+# knife4j
+knife4j:
+  enable: true
+  openapi:
+    title: springcloud
+    description: cloud 学习
+    concat: 八一菜刀
+    url: https://docs.xiaominfo.com
+    version: v4.0
+    license: Apache 2.0
+    license-url: https://stackoverflow.com/
+    terms-of-service-url: https://stackoverflow.com/
+    group:
+      test1:
+        group-name: 订单模块
+        api-rule: package
+        api-rule-resources: com.atguigu.springcloud.controller
