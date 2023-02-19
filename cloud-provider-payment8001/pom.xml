@@ -11,9 +11,8 @@
 
     <artifactId>cloud-provider-payment8001</artifactId>
 
-
     <dependencies>
-        <!--eureka-server-->
+        <!--eureka-client-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -63,12 +62,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-        <!-- knife4j -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
-            <version>4.0.0</version>
         </dependency>
     </dependencies>
 
