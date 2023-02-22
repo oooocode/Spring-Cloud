@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: wth
@@ -31,8 +32,8 @@ public class PaymentController {
     private DiscoveryClient discoveryClient;
 
     @PostMapping("/create")
-    public CommonResult<Long> create(@RequestBody Payment payment){
-        if (payment == null){
+    public CommonResult<Long> create(@RequestBody Payment payment) {
+        if (payment == null) {
             return new CommonResult<>(401, "请求参数为空");
         }
         long paymentId = paymentService.create(payment);
@@ -44,8 +45,8 @@ public class PaymentController {
     }
 
     @GetMapping("/get/{id}")
-    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id){
-        if (id == null || id <= 0){
+    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
+        if (id == null || id <= 0) {
             return new CommonResult<>(401, "请求参数错误");
         }
         Payment payment = paymentService.getPaymentById(id);
@@ -57,7 +58,7 @@ public class PaymentController {
     }
 
     @GetMapping("/discovery")
-    public Object discovery(){
+    public Object discovery() {
         List<String> services = discoveryClient.getServices();
         for (String element : services) {
             log.info("*****element: " + element);
@@ -65,11 +66,26 @@ public class PaymentController {
         // 获取具体某个服务的实体
         List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
         for (ServiceInstance instance : instances) {
-            log.info(instance.getInstanceId()+"\t"+
-                    instance.getHost()+"\t"+
-                    instance.getPort()+"\t"+
+            log.info(instance.getInstanceId() + "\t" +
+                    instance.getHost() + "\t" +
+                    instance.getPort() + "\t" +
                     instance.getUri());
         }
         return this.discoveryClient;
+    }
+
+    @GetMapping(value = "/lb")
+    public String getPaymentLB() {
+        return serverPort;
+    }
+
+    @GetMapping(value = "/feign/timeout")
+    public String feignTimeout() {
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return serverPort;
     }
 }
